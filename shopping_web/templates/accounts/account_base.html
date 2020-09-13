@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  #main-website-logo{
+    text-align: center;
+    margin-top: 5%;
+  }
+  
+ 
+  .welcome{
+    font-weight: bolder;
+    text-align: center;
+    color: #0c8581;
+    font-size: 1.5rem;
+    font-family:fantasy ;
+
+  }
+  #login{
+    color: red;
+    text-align: center;
+  }
+  .imgcontainer{
+      text-align: center;
+  }
+  #bottom-nav{
+    color: white;
+    font-size: 0.8rem;
+  }
+ 
+</style>
+<div class="container">
+   <div class="welcome">
+     WELCOME
+   </div><br><br>
+  {% block account_content %}
+  {% endblock %}
+ 
+</div> 
+<br>
+<div style="text-align: center;" class=" bg-dark" id="bottom-nav">
+  <a class="navbar-brand" href="{% url 'accounts:index' %}">
+    <img src="/static/favicon.ico" width="30px" height="30px" alt="">
+       <span class="menuname"><b>ShopX</b>
+  </a>
+  <div class="row">
+    <div class="col">
+      <br><u><b>CONTACT</b></u> : <br><br><br>
+      <small>
+        GMAIL : collegestudentworld@gmail.com <br><br>
+        ADDRESS : Shreepad banglow, Hariom Colony, Gangapur Road, Nashik, Maharashtra-422013 <br>
+      </small>
+      <small>for anything please contact us, we always there for you</small>
+    </div>
+  </div><br><br><br>
+  <div >
+    <small>
+    All copyrights &copy; are reserverd 2020 @ <a href="{% url 'accounts:index' %}">ShopX</a>
+    </small>
+  </div>
+</div>
+
+{% endblock %}

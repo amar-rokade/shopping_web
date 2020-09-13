@@ -1,0 +1,131 @@
+{% extends 'accounts/account_base.html' %}
+{% load crispy_forms_tags %}
+{% block account_content %}
+
+<div class="container">
+    <h4 id="login">Sign Up</h4>
+    <form id="form" method="POST" >
+        {% csrf_token %}
+        {{ form.username|as_crispy_field }}
+        {{ form.email|as_crispy_field }}
+        <small style="color:red;" id="hint_id_email"></small>
+        {{ form.password1|as_crispy_field }}
+        {{ form.password2|as_crispy_field }}
+        <div style="font-weight: bolder;" class="row">
+            <div class="col"><input type="submit" value="Sign Up" class="btn btn-primary"></div>
+            <div class="col">Have a account <a href="{% url 'accounts:login' %}"> LogIn</a>?</div>
+        </div>
+    </form>
+</div>
+<script>
+  var hint_username = $("#hint_id_username");
+  var hint_email = $("#hint_id_email");
+  var hint_password1 = $("#hint_id_password1");
+  var hint_password2 = $("#hint_id_password2");
+  hint_username.hide();
+  hint_password1.hide();
+  hint_password2.hide();
+
+  //function for checking valig email or not
+  function isValidEmailAddress(emailAddress) {
+    var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+    return pattern.test(emailAddress);
+ }
+
+    //validate usename
+    $("#id_username").change(function () {
+        var username = $(this).val();
+        if (username){
+          $.ajax({
+            url: '/ajax/validate_username/',
+            data: {
+              'username': username
+            },
+            dataType: 'json',
+            success: function (data) {
+              if (data.is_taken) {
+                hint_username.html(data.error_message)
+                hint_username.show();
+              }
+              else{
+                hint_username.hide();
+              }
+            }
+          });
+        }
+  
+      }); 
+
+     //valid email
+      $("#id_email").change(function () {
+        var email = $(this).val();
+        if(email != 0)
+        {
+            if(isValidEmailAddress(email) == true)
+            {
+              $.ajax({
+                url: 'ajax/validate_email/',
+                data: {
+                  'email': email
+                },
+                dataType: 'json',
+                success: function (data) {
+                  if (data.is_taken) {
+                    hint_email.html(data.error_message);
+                    hint_email.show();
+                  }
+                  else{
+                    hint_email.hide();
+                  }
+                }
+              });
+            } else {
+              hint_email.html("Please enter valid email");
+              hint_email.show();
+            }
+        } else {
+          hint_email.hide();
+        }
+      }); 
+
+     
+
+    ///password validate correct or not
+    $("#id_password1").change(function () {
+        var password = $(this).val();
+        if (password.length < 6){
+          hint_password1.html(' Password must contain at least  6 characters.');
+          hint_password1.show();
+        }
+        else{
+          if($.isNumeric(password)){
+            hint_password1.html('password can’t be entirely numeric.');
+            hint_password1.show();
+          }
+          else{
+            hint_password1.hide();
+          } 
+        };
+  
+      }); 
+      
+
+       //validate password
+       $("#id_password2").change(function () {
+        var password2 = $(this).val();
+        console.log('2',password2)
+        if (password2){
+          var password1 = $("#id_password1").val();
+          console.log('1',password1)
+          if (password1 != password2){
+            hint_password2.html("Password not match.")
+            hint_password2.show();
+          }
+          else{
+            hint_password2.hide();
+          }
+        }
+       
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,38 @@
+<style>
+    
+    .message_detail{
+      margin-bottom: 3px;
+      border-bottom: 1px solid #deddd9;
+    }
+  </style>
+          <!-- Blog Entries Column -->
+              <div class="list-group">
+               {% for u in profile_list.all %}
+                  {% if u != request.user %}
+                  <div  class="message_detail" data-catid="{{u.user.profile.id}}">
+                    <button type="button" class="dropdown-item">
+                      <div class="row">
+                        <div class="col-2">
+                          <img height="40" width="40" class="rounded-circle" src="{{ u.profile_image.url }}" alt="not found">
+                        </div>
+                        <div  class="col-4">
+                          <div style="font-weight: bolder;">{{u.user.username}}</div>
+                           <span>
+                            {{u.user.first_name}} {{u.user.last_name}}
+                           </span>
+                        </div>
+                      </div>
+                  </button>
+                </div>
+                  {% endif %}
+              </div>
+              {% endfor %}
+              <input type="hidden" id="csrf_value" value="{{csrf_token}}">
+  <script>
+    //detail chat
+    $(".message_detail").click(function(){
+      user_id = $(this).attr("data-catid")
+      profile(user_id);
+    })
+  </script>
+  

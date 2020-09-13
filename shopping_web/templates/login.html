@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="padding-top: 10%;" class="container ">
+  <div class="shadow p-3 mb-5 bg-white rounded">
+    <h4 style="text-align: center;">Login</h4>
+  <div ><br>
+    <div style="margin: 0 auto;min-width:500px; text-align:center">
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      <form  method="POST">
+        {% csrf_token %}
+         <span> Username </span> {{ form.username }} <br> <br>
+         <span>Password  </span> {{ form.password }} <br> <br>
+          <div  class="row">
+            <div class="col"><input type="submit" value="Login" class="btn btn-primary"></div>
+          </div>
+      </form>
+    </div>
+  </div>
+  </div>
+</div>
+
+{% endblock %}
+ 

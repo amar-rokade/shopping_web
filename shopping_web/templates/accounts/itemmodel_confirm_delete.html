@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load shopx_tags %}
+{% block content %}
+<div style="margin-top: 10%;" class="container">
+  <form  method="post">
+      {% csrf_token %}
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Are you sure want to delete!</h4>
+        <p class="mb-0">
+            <input class="btn btn-info" type="submit" name="I am sure">
+        </p>
+      </div>
+  </form>   
+</div>
+<input type="hidden" class="csrf_value" value="{{csrf_token}}">
+{% endblock %}

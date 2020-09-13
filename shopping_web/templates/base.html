@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <title>shopX</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet">
+    <link rel="stylesheet"  href="{% static 'style.css' %}">
+  </head>
+  <body>
+
+<!-- Modal -->
+<div id="signup" class="modal fade "  id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">SIGNUP</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <a href="{% url 'accounts:buyer_signup'   %}">
+              <button type="button" class="btn-lg btn-info">SignUp as Buyer</button>
+            </a>
+          </div>
+          <div class="col">
+            <a href="{% url 'accounts:seller_signup'  %}">
+              <button type="button" class="btn-lg btn-info">SignUp as Seller</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <!-- navbar -->
+      <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <a class="nav_item navbar-brand mb-0 h1 " href="#">
+          ShopX
+        </a>
+        <div class="container"> 
+          <div style="text-align:center;">
+            <div>
+              <form  id="search" class="form-inline">
+                <input id="query" style="max-width:500px" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            </div>
+          </div>
+          {% if request.user.is_authenticated %}
+          <a  class="nav_item navbar-brand " href="{% url 'accounts:home' %}">
+           Home
+          </a>
+          {% if request.user.is_seller == True %}
+          <a  class="nav_item navbar-brand " href="{% url 'accounts:sellerview' %}">
+            DashBoard
+          </a>
+          {% else %}
+          <a  class="nav_item navbar-brand " href="{% url 'accounts:buyerview' %}">
+            DashBoard
+          </a>
+          {% endif %}
+          <a  class="nav_item navbar-brand " href="{% url 'accounts:logout' %}">
+            LogOut
+          </a>
+          {% else %}
+          <a  class="nav_item navbar-brand" href="{% url 'accounts:home' %}">
+            Home
+          </a>
+          <a  class="nav_item navbar-brand" href="{% url 'accounts:login' %}">
+            LogIn
+          </a>
+          <a  class="nav_item navbar-brand " onclick="Signup()" >
+            SignUp
+          </a>
+          {% endif %}
+      </div>
+     </nav>
+     <div>
+       {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %} 
+     </div>
+     <div id="inner" >
+      {% block content %}
+      {% endblock %}
+</div>
+        
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/static/jquery.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+<script src="/static/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+</html>

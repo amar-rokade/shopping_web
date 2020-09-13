@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="margin-top: 10%;text-align:center" class="container ">
+    <div >
+        <div>
+            <a href="{% url 'accounts:itemform' %}">
+              <button class="btn btn-primary">Add New Item</button>
+            </a>
+          </div>
+          {% for item in item_list %}
+          <div class=" col-3" data-catid="{{item.id}}" style="max-width: fit-content;margin-top:10px"  >
+              <div style="height: 100%;background-color:#f0f0f5;" class="shadow p-1 mb-3 bg-white rounded" >
+              <div style="background: url('{{item.picture.url}}') 100% 100% no-repeat;  background-size: cover;height:300px;width: 300px;">
+                  {% if request.user == item.seller %}
+                  <div style="margin-right:90%;margin-bottom:10px;">
+                      <div class="dropdown">
+                      <a  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span style="font-weight: bolder;cursor: pointer;color:white; margin-left:1%;font-size:xx-large;">...</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{% url 'accounts:update' item.id %}">Edit</a>
+                        <a class="dropdown-item" href="{% url 'accounts:delete' item.id  %}">Delete</a>
+                      </div>
+                    </div>
+                  </div>  
+                  {% endif %}  
+              </div>                                           
+                  <div style="text-align: center;font-weight:bolder;">
+                      {{item.item_name}}
+                  </div> <br>
+                  <div class="row" style="text-align: center;">
+                      <div class="col">
+                          ${{item.price}}
+                      </div>
+                      <div class="col">
+                          {{item.quantity}} left
+                      </div>
+                      <div class="col">  
+                          {% if request.user.is_authenticated %}                                                            
+                          {% is_cart item.id request.user as cart_or_not %}
+                          {% if  cart_or_not %}
+                          <span class="add_cart" item_id="{{item.id}}"><button class="btn btn-info"><small id="add{{item.id}}">added</small> </button></span> 
+                          {% else %}
+                          <span class="add_cart" item_id="{{item.id}}"><button class="btn btn-info"><small id="add{{item.id}}">add</small> </button></span> 
+                          {% endif %}
+                          {% else %}
+                          <a href="{% url 'accounts:login' %}"><button class="btn btn-info"><small id="add{{item.id}}">add</small> </button></a> 
+                          {% endif %}
+                      </div>
+                      <div class="col">
+                      <a href="{% url 'accounts:buy' item.id %}">buy</a>
+                      </div>
+                  </div>
+                  <div class="more_info{{item.id}}">
+                      <span style="font-weight: bold;"> seller :</span> 
+                      {{item.seller}} <br>
+                      <span style="font-weight: bold;">product description :</span>
+                      {{item.item_description}} 
+                  </div>
+              </div>
+          </div>
+          {% empty %}
+          <div>
+             Opps! we don't have any product now ...
+          </div>
+          {% endfor  %}
+    </div>
+</div>
+{% endblock %}
+ 

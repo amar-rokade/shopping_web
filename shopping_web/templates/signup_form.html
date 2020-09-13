@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+<div style="margin-top: 20%;"  class="shadow p-3 mb-5 bg-white rounded">
+    <form  method="post">
+        {% csrf_token %}
+        <div>
+           <span></span> {{form.username}} <br>
+        </div>
+        <div>
+            <span> </span> {{form.email}} <br>
+         </div>
+         <div>
+            <span> </span> {{form.first_name}} <br>
+         </div>
+         <div>
+            <span> </span> {{form.last_name}} <br>
+         </div>
+         <div>
+            <span></span> {{form.password1}} <br>
+         </div>
+         <div>
+            <span> </span> {{form.password2}} <br>
+         </div>
+        <input class="btn btn-info" type="submit" name="signup">
+    </form>
+</div>
+</div>
+{% endblock %}
