@@ -1,1 +1,1 @@
-web: gunicorn amar.wsgi
+web: gunicorn shopping_web.wsgi
