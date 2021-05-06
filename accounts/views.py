@@ -77,7 +77,7 @@ def BuyerView(request):
     # user = Buyer.objects.get(user=request.user)
     cart_n = cart.objects.filter(user=request.user).all()
     print(cart_n)
-    return render(request,'buyerView.html',{'item_list':cart_n})
+    return render(request,'buyerview.html',{'item_list':cart_n})
 
 def ItemFormView(request):
     if request.method == "POST":
@@ -103,6 +103,7 @@ def AddCartView(request):
         else :
             obj.delete()
             is_added = False
+        
         return JsonResponse({'is_added':is_added})
 
 def BuyView(request,pk):

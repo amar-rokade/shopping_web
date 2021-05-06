@@ -4,7 +4,10 @@ from accounts.models import cart
 
 @register.simple_tag
 def is_cart(item_num,user):
-    is_cart_n = cart.objects.filter(user=user,item=item_num)
+    try :
+        is_cart_n = cart.objects.filter(user=user,item=item_num)
+    except : 
+        is_cart_n = False
     return is_cart_n
 
 

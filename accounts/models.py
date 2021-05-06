@@ -30,7 +30,7 @@ class ItemModel(models.Model):
     seller = models.ForeignKey(User,on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
     price = models.CharField(max_length=500)
-    picture = models.ImageField(upload_to = 'img/seller')
+    picture = models.URLField()
     item_name = models.CharField(max_length=500) 
     item_description = models.CharField(max_length=1000)
     post_on = models.DateTimeField(auto_now_add=timezone.now())
