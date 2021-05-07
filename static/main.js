@@ -13,9 +13,11 @@ $(".add_cart").click(function () {
   }).done(function (response) {
     if (response.is_added) {
       console.log(response);
-      $("#add" + item_id).html("added");
+      $("#class_button_" + item_id).attr("class", "btn btn-primary");
+      $("#add" + item_id).html("added to Cart");
     } else {
-      $("#add" + item_id).html("add");
+      $("#class_button_" + item_id).attr("class", "btn btn-danger");
+      $("#add" + item_id).html("add to Cart");
     }
   });
 });

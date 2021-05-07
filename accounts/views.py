@@ -96,6 +96,7 @@ def ItemFormView(request):
 def AddCartView(request):
     item = ItemModel.objects.get(id=request.POST.get('item_id'))
     if request.user.is_authenticated:
+        print(item, request.user)
         obj, created = cart.objects.get_or_create(user=request.user,item=item)
         print(obj,created)
         if created :
